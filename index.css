@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "VT323", ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  user-select: none;
+  cursor: none;
+}
+
+* {
+  cursor: none !important;
+}
+
+/* CRT Scanlines */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* CRT Flicker */
+@keyframes flicker {
+  0% { opacity: 0.95; }
+  5% { opacity: 0.85; }
+  10% { opacity: 0.95; }
+  15% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.crt {
+  animation: flicker 0.15s infinite;
+}
+
+/* Subtle CRT curvature and vignette */
+.crt::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none;
+  z-index: 51;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+}
+
+/* Static Noise */
+.static-noise {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.3"/%3E%3C/svg%3E');
+  animation: noise 0.2s steps(2) infinite;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.15;
+}
+
+.static-heavy {
+  opacity: 0.8;
+  z-index: 100;
+  mix-blend-mode: hard-light;
+}
+
+@keyframes noise {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%, -5%) }
+  20% { transform: translate(-10%, 5%) }
+  30% { transform: translate(5%, -10%) }
+  40% { transform: translate(-5%, 15%) }
+  50% { transform: translate(-10%, 5%) }
+  60% { transform: translate(15%, 0) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+.jrs-shake {
+  animation: jrs-shake 0.04s infinite;
+}
+
+@keyframes jrs-shake {
+  0% { transform: translate(25px, 25px) rotate(2deg) scale(1.2); }
+  10% { transform: translate(-25px, -35px) rotate(-3deg) scale(1.3); }
+  20% { transform: translate(-45px, 10px) rotate(4deg) scale(1.25); }
+  30% { transform: translate(40px, 30px) rotate(-2deg) scale(1.4); }
+  40% { transform: translate(25px, -25px) rotate(3deg) scale(1.25); }
+  50% { transform: translate(-15px, 35px) rotate(-4deg) scale(1.35); }
+  60% { transform: translate(-40px, 20px) rotate(2deg) scale(1.2); }
+  70% { transform: translate(45px, 25px) rotate(-3deg) scale(1.3); }
+  80% { transform: translate(-25px, -25px) rotate(4deg) scale(1.4); }
+  90% { transform: translate(25px, 30px) rotate(-2deg) scale(1.25); }
+  100% { transform: translate(15px, -30px) rotate(3deg) scale(1.3); }
+}
+
+.jrs-glitch {
+  animation: jrs-glitch 0.15s infinite;
+}
+
+@keyframes jrs-glitch {
+  0% { filter: saturate(2) contrast(1.5); }
+  15% { filter: invert(1) saturate(5) contrast(3); }
+  30% { filter: sepia(1) hue-rotate(-50deg) saturate(10) contrast(3); }
+  45% { filter: saturate(2) contrast(2); }
+  60% { filter: invert(0.8) contrast(4); }
+  75% { filter: saturate(3) contrast(2); }
+  90% { filter: invert(1) saturate(0) contrast(5); }
+  100% { filter: saturate(2) contrast(1.5); }
+}
+

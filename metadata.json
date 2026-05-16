@@ -1,0 +1,8 @@
+{
+  "name": "Fun nights with Marcus",
+  "description": "A survival horror web game inspired by Five Nights at Freddy's.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
